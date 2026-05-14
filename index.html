@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mở Khóa Link Tải App</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 400px; }
+        h2 { color: #333; margin-bottom: 20px; }
+        .step { margin-bottom: 15px; }
+        .btn { display: block; width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; text-decoration: none; transition: 0.3s; }
+        
+        .btn-tiktok { background: #000; color: #fff; }
+        .btn-tele { background: #0088cc; color: #fff; }
+        .btn-download { background: #28a745; color: #fff; display: none; } /* Ẩn mặc định */
+        
+        .btn:hover { opacity: 0.8; transform: translateY(-2px); }
+        .status { font-size: 14px; color: #666; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Mở Khóa Link Tải</h2>
+    <p>Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.</p>
+
+    <div class="step">
+        <!-- Thay link TikTok của bạn vào đây -->
+        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" class="btn btn-tiktok" onclick="checkStep(1)">
+            Bước 1: Follow TikTok
+        </a>
+    </div>
+
+    <div class="step">
+        <!-- Thay link Telegram của bạn vào đây -->
+        <a href="https://t.me/plat_mod" target="_blank" class="btn btn-tele" onclick="checkStep(2)">
+            Bước 2: Tham gia Telegram
+        </a>
+    </div>
+
+    <div id="download-section">
+        <!-- Thay link tải App của bạn vào đây -->
+        <a href="https://beacons.ai/noob_iosvn" class="btn btn-download" id="download-btn">
+            MỞ KHÓA: TẢI APP NGAY
+        </a>
+    </div>
+
+    <p class="status" id="msg">Bạn chưa hoàn thành các bước.</p>
+</div>
+
+<script>
+    let step1 = false;
+    let step2 = false;
+
+    function checkStep(step) {
+        if (step === 1) step1 = true;
+        if (step === 2) step2 = true;
+
+        if (step1 && step2) {
+            document.getElementById('download-btn').style.display = 'block';
+            document.getElementById('msg').innerText = "Đã mở khóa thành công!";
+            document.getElementById('msg').style.color = "#28a745";
+        } else {
+            document.getElementById('msg').innerText = "Vui lòng thực hiện đủ 2 bước!";
+        }
+    }
+</script>
+
+</body>
+</html>

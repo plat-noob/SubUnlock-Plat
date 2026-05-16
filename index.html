@@ -5,42 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mở Khóa Link Tải App</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 400px; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #f0f2f5; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            text-align: center; 
+            width: 90%; 
+            max-width: 400px; 
+        }
         h2 { color: #333; margin-bottom: 20px; }
         .step { margin-bottom: 15px; }
-        .btn { display: block; width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; text-decoration: none; transition: 0.3s; }
+        .btn { 
+            display: block; 
+            width: 100%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-decoration: none; 
+            transition: 0.3s; 
+            box-sizing: border-box;
+        }
         
         .btn-tiktok { background: #000; color: #fff; }
         .btn-tele { background: #0088cc; color: #fff; }
-        .btn-download { background: #28a745; color: #fff; display: none; } /* Ẩn mặc định */
+        
+        /* Nút download khi bị khóa */
+        .btn-download { 
+            background: #ccc; 
+            color: #666; 
+            pointer-events: none; /* Không cho click */
+            cursor: not-allowed;
+        } 
+        
+        /* Nút download khi ĐÃ MỞ KHÓA */
+        .btn-download.active {
+            background: #28a745; 
+            color: #fff; 
+            pointer-events: auto; 
+            cursor: pointer;
+            animation: pulse 1.5s infinite; /* Hiệu ứng nhấp nháy thu hút */
+        }
         
         .btn:hover { opacity: 0.8; transform: translateY(-2px); }
-        .status { font-size: 14px; color: #666; margin-top: 10px; }
+        .btn-download:not(.active):hover { transform: none; opacity: 1; }
+        
+        .status { font-size: 14px; color: #666; margin-top: 10px; font-weight: 500; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Mở Khóa Link Tải</h2>
-    <p>Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.</p>
+    <p style="color: #666; font-size: 14px;">Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.</p>
 
     <div class="step">
-        <!-- Thay link TikTok của bạn vào đây -->
-        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" class="btn btn-tiktok" onclick="checkStep(1)">
+        <!-- Link TikTok -->
+        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" class="btn btn-tiktok" onclick="completeStep(1)">
             Bước 1: Follow TikTok
         </a>
     </div>
 
     <div class="step">
-        <!-- Thay link Telegram của bạn vào đây -->
-        <a href="https://t.me/plat_mod" target="_blank" class="btn btn-tele" onclick="checkStep(2)">
+        <!-- Link Telegram -->
+        <a href="https://t.me/plat_mod" target="_blank" class="btn btn-tele" onclick="completeStep(2)">
             Bước 2: Tham gia Telegram
         </a>
     </div>
 
     <div id="download-section">
-        <!-- Thay link tải App của bạn vào đây -->
+        <!-- Nút tải mặc định hiển thị dạng bị khóa (màu xám) -->
         <a href="https://beacons.ai/noob_iosvn" class="btn btn-download" id="download-btn">
             MỞ KHÓA: TẢI APP NGAY
         </a>
@@ -50,19 +102,29 @@
 </div>
 
 <script>
-    let step1 = false;
-    let step2 = false;
+    // Dùng Set để lưu trạng thái các bước không bị trùng lặp
+    const completedSteps = new Set();
+    const totalSteps = 2; 
 
-    function checkStep(step) {
-        if (step === 1) step1 = true;
-        if (step === 2) step2 = true;
+    function completeStep(stepNumber) {
+        completedSteps.add(stepNumber);
 
-        if (step1 && step2) {
-            document.getElementById('download-btn').style.display = 'block';
-            document.getElementById('msg').innerText = "Đã mở khóa thành công!";
-            document.getElementById('msg').style.color = "#28a745";
+        const msgElement = document.getElementById('msg');
+        const downloadBtn = document.getElementById('download-btn');
+
+        if (completedSteps.size === totalSteps) {
+            // Giả lập chờ 1.5 giây để tạo cảm giác hệ thống đang "kiểm tra"
+            msgElement.innerText = "Đang kiểm tra các bước...";
+            msgElement.style.color = "#ff9800";
+
+            setTimeout(() => {
+                downloadBtn.classList.add('active');
+                msgElement.innerText = "Đã mở khóa thành công! Bạn có thể tải ngay.";
+                msgElement.style.color = "#28a745";
+            }, 1500); 
         } else {
-            document.getElementById('msg').innerText = "Vui lòng thực hiện đủ 2 bước!";
+            msgElement.innerText = `Đã hoàn thành ${completedSteps.size}/${totalSteps} bước. Tiếp tục nào!`;
+            msgElement.style.color = "#0088cc";
         }
     }
 </script>

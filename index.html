@@ -39,14 +39,22 @@
             box-sizing: border-box;
         }
         
+        /* Màu gốc của các nút nhiệm vụ */
         .btn-tiktok { background: #000; color: #fff; }
         .btn-tele { background: #0088cc; color: #fff; }
+        
+        /* Trạng thái khi BƯỚC ĐÃ HOÀN THÀNH (Biến thành màu xám xanh + có dấu tích) */
+        .btn.done {
+            background: #6c757d !important;
+            color: #fff !important;
+            opacity: 0.8;
+        }
         
         /* Nút download khi bị khóa */
         .btn-download { 
             background: #ccc; 
             color: #666; 
-            pointer-events: none; /* Không cho click */
+            pointer-events: none; 
             cursor: not-allowed;
         } 
         
@@ -56,11 +64,12 @@
             color: #fff; 
             pointer-events: auto; 
             cursor: pointer;
-            animation: pulse 1.5s infinite; /* Hiệu ứng nhấp nháy thu hút */
+            animation: pulse 1.5s infinite; 
         }
         
         .btn:hover { opacity: 0.8; transform: translateY(-2px); }
         .btn-download:not(.active):hover { transform: none; opacity: 1; }
+        .btn.done:hover { transform: none; opacity: 0.8; } /* Khóa hiệu ứng bay lên khi đã xong */
         
         .status { font-size: 14px; color: #666; margin-top: 10px; font-weight: 500; }
 
@@ -78,21 +87,20 @@
     <p style="color: #666; font-size: 14px;">Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.</p>
 
     <div class="step">
-        <!-- Link TikTok -->
-        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" class="btn btn-tiktok" onclick="completeStep(1)">
+        <!-- Thêm id="step1" để JavaScript nhận diện và đổi chữ -->
+        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" class="btn btn-tiktok" id="step1" onclick="completeStep(1)">
             Bước 1: Follow TikTok
         </a>
     </div>
 
     <div class="step">
-        <!-- Link Telegram -->
-        <a href="https://t.me/plat_mod" target="_blank" class="btn btn-tele" onclick="completeStep(2)">
+        <!-- Thêm id="step2" để JavaScript nhận diện và đổi chữ -->
+        <a href="https://t.me/plat_mod" target="_blank" class="btn btn-tele" id="step2" onclick="completeStep(2)">
             Bước 2: Tham gia Telegram
         </a>
     </div>
 
     <div id="download-section">
-        <!-- Nút tải mặc định hiển thị dạng bị khóa (màu xám) -->
         <a href="https://beacons.ai/noob_iosvn" class="btn btn-download" id="download-btn">
             MỞ KHÓA: TẢI APP NGAY
         </a>
@@ -102,18 +110,27 @@
 </div>
 
 <script>
-    // Dùng Set để lưu trạng thái các bước không bị trùng lặp
     const completedSteps = new Set();
     const totalSteps = 2; 
 
     function completeStep(stepNumber) {
-        completedSteps.add(stepNumber);
+        // 1. Tìm nút vừa được bấm bằng ID
+        const currentStepBtn = document.getElementById(`step${stepNumber}`);
+        
+        // 2. Nếu bước này chưa từng được hoàn thành trước đó
+        if (!completedSteps.has(stepNumber)) {
+            completedSteps.add(stepNumber);
+            
+            // Đổi chữ của nút thành "Đã hoàn thành" và thêm class ".done" để đổi màu sắc
+            currentStepBtn.innerText += " (✓ Đã hoàn thành)";
+            currentStepBtn.classList.add('done');
+        }
 
         const msgElement = document.getElementById('msg');
         const downloadBtn = document.getElementById('download-btn');
 
+        // 3. Kiểm tra xem đã xong hết tất cả các bước chưa
         if (completedSteps.size === totalSteps) {
-            // Giả lập chờ 1.5 giây để tạo cảm giác hệ thống đang "kiểm tra"
             msgElement.innerText = "Đang kiểm tra các bước...";
             msgElement.style.color = "#ff9800";
 
@@ -121,7 +138,7 @@
                 downloadBtn.classList.add('active');
                 msgElement.innerText = "Đã mở khóa thành công! Bạn có thể tải ngay.";
                 msgElement.style.color = "#28a745";
-            }, 1500); 
+            }, 1200); 
         } else {
             msgElement.innerText = `Đã hoàn thành ${completedSteps.size}/${totalSteps} bước. Tiếp tục nào!`;
             msgElement.style.color = "#0088cc";

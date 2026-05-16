@@ -39,15 +39,15 @@
             box-sizing: border-box;
         }
         
-        /* Màu gốc của các nút nhiệm vụ */
+        /* Màu gốc ban đầu của các ô bước */
         .btn-tiktok { background: #000; color: #fff; }
         .btn-tele { background: #0088cc; color: #fff; }
         
-        /* Trạng thái khi BƯỚC ĐÃ HOÀN THÀNH (Biến thành màu xám xanh + có dấu tích) */
+        /* Trạng thái khi ô đó ĐÃ HOÀN THÀNH: Chuyển sang màu xám xanh lá nhẹ */
         .btn.done {
-            background: #6c757d !important;
+            background: #2b8a3e !important; /* Đổi thành màu xanh lá đậm báo hiệu hoàn thành thành công */
             color: #fff !important;
-            opacity: 0.8;
+            opacity: 0.9;
         }
         
         /* Nút download khi bị khóa */
@@ -69,7 +69,7 @@
         
         .btn:hover { opacity: 0.8; transform: translateY(-2px); }
         .btn-download:not(.active):hover { transform: none; opacity: 1; }
-        .btn.done:hover { transform: none; opacity: 0.8; } /* Khóa hiệu ứng bay lên khi đã xong */
+        .btn.done:hover { transform: none; opacity: 0.9; } 
         
         .status { font-size: 14px; color: #666; margin-top: 10px; font-weight: 500; }
 
@@ -87,15 +87,15 @@
     <p style="color: #666; font-size: 14px;">Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.</p>
 
     <div class="step">
-        <!-- Thêm id="step1" để JavaScript nhận diện và đổi chữ -->
-        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" class="btn btn-tiktok" id="step1" onclick="completeStep(1)">
+        <!-- Nút bước 1 -->
+        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" class="btn btn-tiktok" id="step1" onclick="completeStep(1, 'Bước 1: Follow TikTok')">
             Bước 1: Follow TikTok
         </a>
     </div>
 
     <div class="step">
-        <!-- Thêm id="step2" để JavaScript nhận diện và đổi chữ -->
-        <a href="https://t.me/plat_mod" target="_blank" class="btn btn-tele" id="step2" onclick="completeStep(2)">
+        <!-- Nút bước 2 -->
+        <a href="https://t.me/plat_mod" target="_blank" class="btn btn-tele" id="step2" onclick="completeStep(2, 'Bước 2: Tham gia Telegram')">
             Bước 2: Tham gia Telegram
         </a>
     </div>
@@ -113,23 +113,21 @@
     const completedSteps = new Set();
     const totalSteps = 2; 
 
-    function completeStep(stepNumber) {
-        // 1. Tìm nút vừa được bấm bằng ID
+    // Hàm xử lý khi click, nhận vào số bước và văn bản gốc của ô đó
+    function completeStep(stepNumber, originalText) {
         const currentStepBtn = document.getElementById(`step${stepNumber}`);
         
-        // 2. Nếu bước này chưa từng được hoàn thành trước đó
         if (!completedSteps.has(stepNumber)) {
             completedSteps.add(stepNumber);
             
-            // Đổi chữ của nút thành "Đã hoàn thành" và thêm class ".done" để đổi màu sắc
-            currentStepBtn.innerText += " (✓ Đã hoàn thành)";
+            // THAY ĐỔI NGAY nội dung bên trong ô thành "Đã hoàn thành" kèm dấu tích
+            currentStepBtn.innerText = originalText + " - Đã hoàn thành ✓";
             currentStepBtn.classList.add('done');
         }
 
         const msgElement = document.getElementById('msg');
         const downloadBtn = document.getElementById('download-btn');
 
-        // 3. Kiểm tra xem đã xong hết tất cả các bước chưa
         if (completedSteps.size === totalSteps) {
             msgElement.innerText = "Đang kiểm tra các bước...";
             msgElement.style.color = "#ff9800";

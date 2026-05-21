@@ -61,12 +61,15 @@
         /* Màu gốc ban đầu của các ô bước */
         .btn-tiktok { background: #000; color: #fff; }
         .btn-tele { background: #0088cc; color: #fff; }
+        .btn-tele2 { background: #229ED9; color: #fff; } /* Màu Tele nhạt hơn chút để phân biệt */
         
         /* Trạng thái khi ô đó ĐÃ HOÀN THÀNH: Chuyển sang màu ĐỎ */
         .btn.done {
             background: #dc3545 !important; 
             color: #fff !important;
             opacity: 0.95;
+            cursor: default;
+            pointer-events: none; /* Ngăn click lại khi đã xong */
         }
         
         /* Nút download khi bị khóa */
@@ -90,7 +93,7 @@
         .btn-download:not(.active):hover { transform: none; opacity: 1; }
         .btn.done:hover { transform: none; opacity: 0.95; } 
         
-        .status { font-size: 14px; color: #666; margin-top: 10px; font-weight: 500; }
+        .status { font-size: 14px; color: #666; margin-top: 10px; font-weight: 500; min-height: 20px; }
 
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -107,18 +110,29 @@
     
     <p style="color: #666; font-size: 14px;">Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.</p>
 
+    <!-- BƯỚC 1 -->
     <div class="step">
-        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" class="btn btn-tiktok" id="step1" onclick="completeStep(1, 'Bước 1: Follow TikTok')">
+        <a href="http://www.tiktok.com/@duyy_cfm" target="_blank" rel="noopener noreferrer" class="btn btn-tiktok" id="step1" onclick="completeStep(event, 1, 'Bước 1: Follow TikTok')">
             Bước 1: Follow TikTok
         </a>
     </div>
 
+    <!-- BƯỚC 2 (Đã đổi từ bước 3 cũ qua) -->
     <div class="step">
-        <a href="https://t.me/plat_mod" target="_blank" class="btn btn-tele" id="step2" onclick="completeStep(2, 'Bước 2: Tham gia Telegram')">
-            Bước 2: Tham gia Telegram
+        <!-- Bạn thay link Telegram Kênh 2 vào href dưới này nhé -->
+        <a href="https://t.me/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele2" id="step2" onclick="completeStep(event, 2, 'Bước 2: Tham gia Telegram Kênh 2')">
+            Bước 2: Tham gia Telegram Kênh 2
         </a>
     </div>
 
+    <!-- BƯỚC 3 (Đã đổi từ bước 2 cũ qua) -->
+    <div class="step">
+        <a href="https://t.me/F4ckCheat" target="_blank" rel="noopener noreferrer" class="btn btn-tele" id="step3" onclick="completeStep(event, 3, 'Bước 3: Tham gia Telegram')">
+            Bước 3: Tham gia Telegram
+        </a>
+    </div>
+
+    <!-- NÚT TẢI XUỐNG -->
     <div id="download-section">
         <a href="https://beacons.ai/noob_iosvn" class="btn btn-download" id="download-btn">
             MỞ KHÓA: TẢI APP NGAY
@@ -130,9 +144,12 @@
 
 <script>
     const completedSteps = new Set();
-    const totalSteps = 2; 
+    const totalSteps = 3; 
 
-    function completeStep(stepNumber, originalText) {
+    function completeStep(event, stepNumber, originalText) {
+        // Ngăn chặn chuyển hướng lập tức để xử lý giao diện trước
+        event.preventDefault();
+        const url = event.currentTarget.getAttribute('href');
         const currentStepBtn = document.getElementById(`step${stepNumber}`);
         
         if (!completedSteps.has(stepNumber)) {
@@ -159,6 +176,11 @@
             msgElement.innerText = `Đã hoàn thành ${completedSteps.size}/${totalSteps} bước. Tiếp tục nào!`;
             msgElement.style.color = "#0088cc";
         }
+
+        // Mở link gốc trong tab mới sau khi đã cập nhật trạng thái UI xong
+        setTimeout(() => {
+            window.open(url, '_blank');
+        }, 100);
     }
 </script>
 

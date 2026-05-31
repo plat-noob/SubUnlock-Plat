@@ -33,8 +33,7 @@
             letter-spacing: 1px;
             margin-bottom: 5px;
             display: block;
-            transform: skewX(-5deg); /* Hơi nghiêng nhẹ nghệ thuật */
-            /* Đổ bóng nhiều lớp tạo hiệu ứng khối 3D */
+            transform: skewX(-5deg);
             text-shadow: 
                 1px 1px 0px #d0e3ff,
                 2px 2px 0px #b0d2ff,
@@ -61,7 +60,7 @@
         /* Màu gốc ban đầu của các ô bước */
         .btn-tiktok { background: #000; color: #fff; }
         .btn-tele { background: #0088cc; color: #fff; }
-        .btn-tele2 { background: #229ED9; color: #fff; } /* Màu Tele nhạt hơn chút để phân biệt */
+        .btn-tele2 { background: #229ED9; color: #fff; }
         
         /* Trạng thái khi ô đó ĐÃ HOÀN THÀNH: Chuyển sang màu ĐỎ */
         .btn.done {
@@ -69,7 +68,7 @@
             color: #fff !important;
             opacity: 0.95;
             cursor: default;
-            pointer-events: none; /* Ngăn click lại khi đã xong */
+            pointer-events: none;
         }
         
         /* Nút download khi bị khóa */
@@ -110,29 +109,24 @@
     
     <p style="color: #666; font-size: 14px;">Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.</p>
 
-    <!-- BƯỚC 1 -->
     <div class="step">
-        <a href="https://www.tiktok.com/@plat_noob?_r=1&_t=ZS-96p8XnK4rf6" target="_blank" rel="noopener noreferrer" class="btn btn-tiktok" id="step1" onclick="completeStep(event, 1, 'Bước 1: Follow TikTok')">
+        <a href="https://www.tiktok.com/@plat_noob" target="_blank" rel="noopener noreferrer" class="btn btn-tiktok" id="step1" onclick="completeStep(this, 1, 'Bước 1: Follow TikTok')">
             Bước 1: Follow TikTok
         </a>
     </div>
 
-    <!-- BƯỚC 2 (Đã đổi từ bước 3 cũ qua) -->
     <div class="step">
-        <!-- Bạn thay link Telegram Kênh 2 vào href dưới này nhé -->
-        <a href="https://t.me/boost/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele2" id="step2" onclick="completeStep(event, 2, 'Bước 2: Channel Telegram 1')">
+        <a href="https://t.me/boost/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele2" id="step2" onclick="completeStep(this, 2, 'Bước 2: Channel Telegram 1')">
             Bước 2: Channel Telegram 1
         </a>
     </div>
 
-    <!-- BƯỚC 3 (Đã đổi từ bước 2 cũ qua) -->
     <div class="step">
-        <a href="https://t.me/F4ckCheat" target="_blank" rel="noopener noreferrer" class="btn btn-tele" id="step3" onclick="completeStep(event, 3, 'Bước 3: Channel Telegram 2')">
+        <a href="https://t.me/F4ckCheat" target="_blank" rel="noopener noreferrer" class="btn btn-tele" id="step3" onclick="completeStep(this, 3, 'Bước 3: Channel Telegram 2')">
             Bước 3: Channel Telegram 2
         </a>
     </div>
 
-    <!-- NÚT TẢI XUỐNG -->
     <div id="download-section">
         <a href="https://beacons.ai/noob_iosvn" class="btn btn-download" id="download-btn">
             MỞ KHÓA: TẢI APP NGAY
@@ -146,19 +140,15 @@
     const completedSteps = new Set();
     const totalSteps = 3; 
 
-    function completeStep(event, stepNumber, originalText) {
-        // Ngăn chặn chuyển hướng lập tức để xử lý giao diện trước
-        event.preventDefault();
-        const url = event.currentTarget.getAttribute('href');
-        const currentStepBtn = document.getElementById(`step${stepNumber}`);
+    function completeStep(element, stepNumber, originalText) {
+        // Nếu bước này đã nhấn và hoàn thành rồi thì bỏ qua không chạy lại logic
+        if (completedSteps.has(stepNumber)) return;
+
+        completedSteps.add(stepNumber);
         
-        if (!completedSteps.has(stepNumber)) {
-            completedSteps.add(stepNumber);
-            
-            // Thay đổi chữ và tự động đổi màu sang ĐỎ khi click
-            currentStepBtn.innerText = originalText + " - Đã hoàn thành ✓";
-            currentStepBtn.classList.add('done');
-        }
+        // Cập nhật giao diện nút sang chữ mới và đổi sang màu đỏ ngay lập tức
+        element.innerText = originalText + " - Đã hoàn thành ✓";
+        element.classList.add('done');
 
         const msgElement = document.getElementById('msg');
         const downloadBtn = document.getElementById('download-btn');
@@ -177,10 +167,7 @@
             msgElement.style.color = "#0088cc";
         }
 
-        // Mở link gốc trong tab mới sau khi đã cập nhật trạng thái UI xong
-        setTimeout(() => {
-            window.open(url, '_blank');
-        }, 100);
+        // Trình duyệt sẽ tự động mở thuộc tính href gốc trong thẻ <a> ở tab mới mà không bị chặn Pop-up.
     }
 </script>
 

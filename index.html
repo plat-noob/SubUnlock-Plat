@@ -162,12 +162,6 @@
         </a>
     </div>
 
-    <div class="step">
-        <a href="https://t.me/F4ckCheat" target="_blank" rel="noopener noreferrer" class="btn btn-tele" id="step3" onclick="completeStep(this, 3, 'Bước 3: Channel Telegram 2')">
-            <i class="fab fa-telegram"></i> Bước 3: Channel Telegram 2
-        </a>
-    </div>
-
     <div id="download-section">
         <a href="https://beacons.ai/noob_iosvn" class="btn btn-download" id="download-btn">
             <i class="fas fa-lock"></i> MỞ KHÓA: TẢI APP NGAY
@@ -179,7 +173,8 @@
 
 <script>
     const completedSteps = new Set();
-    const totalSteps = 3; 
+    // Đã đổi tổng số bước từ 3 xuống 2
+    const totalSteps = 2; 
 
     function completeStep(element, stepNumber, originalText) {
         if (completedSteps.has(stepNumber)) return;
@@ -213,3 +208,4 @@
 
 </body>
 </html>
+

@@ -60,15 +60,13 @@
         /* Màu gốc ban đầu của các ô bước */
         .btn-tiktok { background: #000; color: #fff; }
         .btn-tele { background: #0088cc; color: #fff; }
-        .btn-tele2 { background: #229ED9; color: #fff; }
         
-        /* Trạng thái khi ô đó ĐÃ HOÀN THÀNH: Chuyển sang màu ĐỎ */
+        /* Trạng thái khi ô đó ĐÃ HOÀN THÀNH */
         .btn.done {
             background: #dc3545 !important; 
             color: #fff !important;
-            opacity: 0.95;
-            cursor: default;
-            pointer-events: none;
+            opacity: 0.85 !important;
+            pointer-events: none; 
         }
         
         /* Nút download khi bị khóa */
@@ -88,9 +86,10 @@
             animation: pulse 1.5s infinite; 
         }
         
+        /* Hiệu ứng Hover */
         .btn:hover { opacity: 0.8; transform: translateY(-2px); }
         .btn-download:not(.active):hover { transform: none; opacity: 1; }
-        .btn.done:hover { transform: none; opacity: 0.95; } 
+        .btn.done:hover { transform: none !important; opacity: 0.85 !important; } 
         
         .status { font-size: 14px; color: #666; margin-top: 10px; font-weight: 500; min-height: 20px; }
 
@@ -116,14 +115,8 @@
     </div>
 
     <div class="step">
-        <a href="https://t.me/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele2" id="step2" onclick="completeStep(this, 2, 'Bước 2: Channel Telegram 1')">
-            Bước 2: Channel Telegram 1
-        </a>
-    </div>
-
-    <div class="step">
-        <a href="https://t.me/F4ckCheat" target="_blank" rel="noopener noreferrer" class="btn btn-tele" id="step3" onclick="completeStep(this, 3, 'Bước 3: Channel Telegram 2')">
-            Bước 3: Channel Telegram 2
+        <a href="https://t.me/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele" id="step2" onclick="completeStep(this, 2, 'Bước 2: Channel Telegram')">
+            Bước 2: Channel Telegram
         </a>
     </div>
 
@@ -138,15 +131,13 @@
 
 <script>
     const completedSteps = new Set();
-    const totalSteps = 3; 
+    const totalSteps = 2; // ĐÃ ĐỔI THÀNH 2 BƯỚC
 
     function completeStep(element, stepNumber, originalText) {
-        // Nếu bước này đã nhấn và hoàn thành rồi thì bỏ qua không chạy lại logic
         if (completedSteps.has(stepNumber)) return;
 
         completedSteps.add(stepNumber);
         
-        // Cập nhật giao diện nút sang chữ mới và đổi sang màu đỏ ngay lập tức
         element.innerText = originalText + " - Đã hoàn thành ✓";
         element.classList.add('done');
 
@@ -166,10 +157,9 @@
             msgElement.innerText = `Đã hoàn thành ${completedSteps.size}/${totalSteps} bước. Tiếp tục nào!`;
             msgElement.style.color = "#0088cc";
         }
-
-        // Trình duyệt sẽ tự động mở thuộc tính href gốc trong thẻ <a> ở tab mới mà không bị chặn Pop-up.
     }
 </script>
 
 </body>
 </html>
+

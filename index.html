@@ -4,99 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mở Khóa Link Tải App</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #f0f2f5; 
+            font-family: 'Poppins', sans-serif; 
+            /* Nền Gradient hiện đại */
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             display: flex; 
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
             margin: 0; 
+            color: #333;
         }
+        
         .container { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 35px 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
             text-align: center; 
             width: 90%; 
-            max-width: 400px; 
+            max-width: 420px; 
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* HIỆU ỨNG CHỮ ADMIN 3D ĐẸP */
         .admin-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
             color: #1a73e8;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            display: block;
-            transform: skewX(-5deg);
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            display: inline-block;
+            transform: skewX(-8deg);
             text-shadow: 
                 1px 1px 0px #d0e3ff,
                 2px 2px 0px #b0d2ff,
                 3px 3px 0px #90c1ff,
-                4px 4px 5px rgba(0, 0, 0, 0.15);
+                4px 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        h2 { color: #333; margin-top: 5px; margin-bottom: 20px; font-size: 24px; }
+        h2 { 
+            margin-top: 5px; 
+            margin-bottom: 25px; 
+            font-size: 22px; 
+            font-weight: 600;
+        }
+
         .step { margin-bottom: 15px; }
+        
         .btn { 
-            display: block; 
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
             width: 100%; 
-            padding: 12px; 
+            padding: 14px; 
             margin: 10px 0; 
             border: none; 
-            border-radius: 8px; 
+            border-radius: 12px; 
             cursor: pointer; 
-            font-weight: bold; 
+            font-weight: 600; 
+            font-size: 15px;
             text-decoration: none; 
-            transition: 0.3s; 
+            transition: all 0.3s ease; 
             box-sizing: border-box;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
         /* Màu gốc ban đầu của các ô bước */
         .btn-tiktok { background: #000; color: #fff; }
         .btn-tele { background: #0088cc; color: #fff; }
+        .btn-tele2 { background: #229ED9; color: #fff; }
         
         /* Trạng thái khi ô đó ĐÃ HOÀN THÀNH */
         .btn.done {
-            background: #dc3545 !important; 
+            background: #28a745 !important; /* Đổi sang màu xanh lá mượt hơn */
             color: #fff !important;
-            opacity: 0.85 !important;
-            pointer-events: none; 
+            box-shadow: none;
+            cursor: default;
+            pointer-events: none;
         }
         
         /* Nút download khi bị khóa */
         .btn-download { 
-            background: #ccc; 
-            color: #666; 
+            background: #e0e0e0; 
+            color: #888; 
             pointer-events: none; 
             cursor: not-allowed;
+            box-shadow: none;
+            margin-top: 25px;
         } 
         
         /* Nút download khi ĐÃ MỞ KHÓA */
         .btn-download.active {
-            background: #28a745; 
+            background: linear-gradient(135deg, #f12711 0%, #f5af19 100%); 
             color: #fff; 
             pointer-events: auto; 
             cursor: pointer;
+            box-shadow: 0 8px 15px rgba(241, 39, 17, 0.3);
             animation: pulse 1.5s infinite; 
         }
         
-        /* Hiệu ứng Hover */
-        .btn:hover { opacity: 0.8; transform: translateY(-2px); }
-        .btn-download:not(.active):hover { transform: none; opacity: 1; }
-        .btn.done:hover { transform: none !important; opacity: 0.85 !important; } 
+        .btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .btn-download:not(.active):hover { transform: none; box-shadow: none; }
+        .btn.done:hover { transform: none; } 
         
-        .status { font-size: 14px; color: #666; margin-top: 10px; font-weight: 500; min-height: 20px; }
+        .status { 
+            font-size: 14px; 
+            color: #666; 
+            margin-top: 15px; 
+            font-weight: 500; 
+            min-height: 20px; 
+            transition: color 0.3s ease;
+        }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); box-shadow: 0 8px 15px rgba(241, 39, 17, 0.3); }
+            50% { transform: scale(1.04); box-shadow: 0 12px 20px rgba(241, 39, 17, 0.5); }
+            100% { transform: scale(1); box-shadow: 0 8px 15px rgba(241, 39, 17, 0.3); }
         }
     </style>
 </head>
@@ -106,55 +146,66 @@
     <span class="admin-title">Admin : Plat•Noob</span>
     <h2>Mở Khóa Link Tải</h2>
     
-    <p style="color: #666; font-size: 14px;">Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.</p>
+    <p style="color: #777; font-size: 14px; margin-bottom: 25px;">
+        Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.
+    </p>
 
     <div class="step">
         <a href="https://www.tiktok.com/@plat_noob" target="_blank" rel="noopener noreferrer" class="btn btn-tiktok" id="step1" onclick="completeStep(this, 1, 'Bước 1: Follow TikTok')">
-            Bước 1: Follow TikTok
+            <i class="fab fa-tiktok"></i> Bước 1: Follow TikTok
         </a>
     </div>
 
     <div class="step">
-        <a href="https://t.me/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele" id="step2" onclick="completeStep(this, 2, 'Bước 2: Channel Telegram')">
-            Bước 2: Channel Telegram
+        <a href="https://t.me/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele2" id="step2" onclick="completeStep(this, 2, 'Bước 2: Channel Telegram 1')">
+            <i class="fab fa-telegram-plane"></i> Bước 2: Channel Telegram 1
+        </a>
+    </div>
+
+    <div class="step">
+        <a href="https://t.me/F4ckCheat" target="_blank" rel="noopener noreferrer" class="btn btn-tele" id="step3" onclick="completeStep(this, 3, 'Bước 3: Channel Telegram 2')">
+            <i class="fab fa-telegram"></i> Bước 3: Channel Telegram 2
         </a>
     </div>
 
     <div id="download-section">
         <a href="https://beacons.ai/noob_iosvn" class="btn btn-download" id="download-btn">
-            MỞ KHÓA: TẢI APP NGAY
+            <i class="fas fa-lock"></i> MỞ KHÓA: TẢI APP NGAY
         </a>
     </div>
 
-    <p class="status" id="msg">Bạn chưa hoàn thành các bước.</p>
+    <p class="status" id="msg"><i class="fas fa-info-circle"></i> Bạn chưa hoàn thành các bước.</p>
 </div>
 
 <script>
     const completedSteps = new Set();
-    const totalSteps = 2; // ĐÃ ĐỔI THÀNH 2 BƯỚC
+    const totalSteps = 3; 
 
     function completeStep(element, stepNumber, originalText) {
         if (completedSteps.has(stepNumber)) return;
 
         completedSteps.add(stepNumber);
         
-        element.innerText = originalText + " - Đã hoàn thành ✓";
+        // Cập nhật giao diện: Đổi icon thành dấu tích xanh và đổi text
+        element.innerHTML = `<i class="fas fa-check-circle"></i> ${originalText} - Đã xong`;
         element.classList.add('done');
 
         const msgElement = document.getElementById('msg');
         const downloadBtn = document.getElementById('download-btn');
 
         if (completedSteps.size === totalSteps) {
-            msgElement.innerText = "Đang kiểm tra các bước...";
+            msgElement.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Đang kiểm tra các bước...`;
             msgElement.style.color = "#ff9800";
 
             setTimeout(() => {
                 downloadBtn.classList.add('active');
-                msgElement.innerText = "Đã mở khóa thành công! Bạn có thể tải ngay.";
+                // Đổi icon ổ khóa thành icon tải xuống
+                downloadBtn.innerHTML = `<i class="fas fa-cloud-download-alt"></i> TẢI APP NGAY`;
+                msgElement.innerHTML = `<i class="fas fa-check-double"></i> Đã mở khóa thành công!`;
                 msgElement.style.color = "#28a745";
             }, 1200); 
         } else {
-            msgElement.innerText = `Đã hoàn thành ${completedSteps.size}/${totalSteps} bước. Tiếp tục nào!`;
+            msgElement.innerHTML = `<i class="fas fa-tasks"></i> Đã hoàn thành ${completedSteps.size}/${totalSteps} bước. Tiếp tục nào!`;
             msgElement.style.color = "#0088cc";
         }
     }
@@ -162,4 +213,3 @@
 
 </body>
 </html>
-

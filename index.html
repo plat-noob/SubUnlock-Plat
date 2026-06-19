@@ -11,7 +11,6 @@
     <style>
         body { 
             font-family: 'Poppins', sans-serif; 
-            /* Nền Gradient hiện đại */
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             display: flex; 
             justify-content: center; 
@@ -38,7 +37,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* HIỆU ỨNG CHỮ ADMIN 3D ĐẸP */
         .admin-title {
             font-size: 22px;
             font-weight: 800;
@@ -83,21 +81,19 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
-        /* Màu gốc ban đầu của các ô bước */
+        /* Màu sắc các nút mạng xã hội */
         .btn-tiktok { background: #000; color: #fff; }
-        .btn-tele { background: #0088cc; color: #fff; }
+        .btn-facebook { background: #1877F2; color: #fff; }
         .btn-tele2 { background: #229ED9; color: #fff; }
         
-        /* Trạng thái khi ô đó ĐÃ HOÀN THÀNH */
         .btn.done {
-            background: #28a745 !important; /* Đổi sang màu xanh lá mượt hơn */
+            background: #28a745 !important; 
             color: #fff !important;
             box-shadow: none;
             cursor: default;
             pointer-events: none;
         }
         
-        /* Nút download khi bị khóa */
         .btn-download { 
             background: #e0e0e0; 
             color: #888; 
@@ -107,7 +103,6 @@
             margin-top: 25px;
         } 
         
-        /* Nút download khi ĐÃ MỞ KHÓA */
         .btn-download.active {
             background: linear-gradient(135deg, #f12711 0%, #f5af19 100%); 
             color: #fff; 
@@ -157,13 +152,19 @@
     </div>
 
     <div class="step">
-        <a href="https://t.me/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele2" id="step2" onclick="completeStep(this, 2, 'Bước 2: Channel Telegram ')">
-            <i class="fab fa-telegram-plane"></i> Bước 2: Channel Telegram
+        <a href="https://www.facebook.com/share/1Jc6oAWpor/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="btn btn-facebook" id="step2" onclick="completeStep(this, 2, 'Bước 2: Follow Facebook')">
+            <i class="fab fa-facebook-f"></i> Bước 2: Follow Facebook
+        </a>
+    </div>
+
+    <div class="step">
+        <a href="https://t.me/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele2" id="step3" onclick="completeStep(this, 3, 'Bước 3: Channel Telegram')">
+            <i class="fab fa-telegram-plane"></i> Bước 3: Channel Telegram
         </a>
     </div>
 
     <div id="download-section">
-        <a href="https://beacons.ai/duyy_plat" class="btn btn-download" id="download-btn">
+        <a class="btn btn-download" id="download-btn">
             <i class="fas fa-lock"></i> MỞ KHÓA: TẢI APP NGAY
         </a>
     </div>
@@ -173,15 +174,17 @@
 
 <script>
     const completedSteps = new Set();
-    // Đã đổi tổng số bước từ 3 xuống 2
-    const totalSteps = 2; 
+    const totalSteps = 3; // Đã nâng tổng số bước lên 3
+    
+    // Thay link tải thực tế của bạn ở đây
+    const SECRET_DOWNLOAD_LINK = "https://beacons.ai/duyy_plat"; 
 
     function completeStep(element, stepNumber, originalText) {
         if (completedSteps.has(stepNumber)) return;
 
         completedSteps.add(stepNumber);
         
-        // Cập nhật giao diện: Đổi icon thành dấu tích xanh và đổi text
+        // Đổi trạng thái nút khi click hoàn thành
         element.innerHTML = `<i class="fas fa-check-circle"></i> ${originalText} - Đã xong`;
         element.classList.add('done');
 
@@ -193,8 +196,12 @@
             msgElement.style.color = "#ff9800";
 
             setTimeout(() => {
+                // Kích hoạt link và hiệu ứng nút download
+                downloadBtn.setAttribute('href', SECRET_DOWNLOAD_LINK);
+                downloadBtn.setAttribute('target', '_blank');
+                downloadBtn.setAttribute('rel', 'noopener noreferrer');
+                
                 downloadBtn.classList.add('active');
-                // Đổi icon ổ khóa thành icon tải xuống
                 downloadBtn.innerHTML = `<i class="fas fa-cloud-download-alt"></i> TẢI APP NGAY`;
                 msgElement.innerHTML = `<i class="fas fa-check-double"></i> Đã mở khóa thành công!`;
                 msgElement.style.color = "#28a745";
@@ -208,4 +215,3 @@
 
 </body>
 </html>
-

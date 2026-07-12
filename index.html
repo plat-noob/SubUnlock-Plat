@@ -145,24 +145,28 @@
         Vui lòng hoàn thành các bước bên dưới để nhận link tải ứng dụng.
     </p>
 
+    <!-- Bước 1: TikTok -->
     <div class="step">
         <a href="https://www.tiktok.com/@plat_duyy" target="_blank" rel="noopener noreferrer" class="btn btn-tiktok" id="step1" onclick="completeStep(this, 1, 'Bước 1: Follow TikTok')">
             <i class="fab fa-tiktok"></i> Bước 1: Follow TikTok
         </a>
     </div>
 
+    <!-- Bước 2: Facebook (ĐÃ FIX LỖI THIẾU CLASS STYLE) -->
     <div class="step">
-        <a href="https://www.facebook.com/share/1LoNz39WeJ/?mibextid=wwXIfr" id="step2" onclick="completeStep(this, 2, 'Bước 2: Follow Facebook')">
+        <a href="https://www.facebook.com/share/1LoNz39WeJ/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="btn btn-facebook" id="step2" onclick="completeStep(this, 2, 'Bước 2: Follow Facebook')">
             <i class="fab fa-facebook-f"></i> Bước 2: Follow Facebook
         </a>
     </div>
 
+    <!-- Bước 3: Telegram -->
     <div class="step">
         <a href="https://t.me/plat_mod" target="_blank" rel="noopener noreferrer" class="btn btn-tele2" id="step3" onclick="completeStep(this, 3, 'Bước 3: Channel Telegram')">
             <i class="fab fa-telegram-plane"></i> Bước 3: Channel Telegram
         </a>
     </div>
 
+    <!-- Nút Download -->
     <div id="download-section">
         <a class="btn btn-download" id="download-btn">
             <i class="fas fa-lock"></i> MỞ KHÓA: TẢI APP NGAY
@@ -174,9 +178,9 @@
 
 <script>
     const completedSteps = new Set();
-    const totalSteps = 3; // Đã nâng tổng số bước lên 3
+    const totalSteps = 3; 
     
-    // Thay link tải thực tế của bạn ở đây
+    // Link đích sau khi mở khóa thành công
     const SECRET_DOWNLOAD_LINK = "https://beacons.ai/duyy_plat"; 
 
     function completeStep(element, stepNumber, originalText) {
@@ -184,7 +188,7 @@
 
         completedSteps.add(stepNumber);
         
-        // Đổi trạng thái nút khi click hoàn thành
+        // Cập nhật trạng thái nút đã click
         element.innerHTML = `<i class="fas fa-check-circle"></i> ${originalText} - Đã xong`;
         element.classList.add('done');
 
@@ -196,7 +200,7 @@
             msgElement.style.color = "#ff9800";
 
             setTimeout(() => {
-                // Kích hoạt link và hiệu ứng nút download
+                // Kích hoạt nút download hoạt động
                 downloadBtn.setAttribute('href', SECRET_DOWNLOAD_LINK);
                 downloadBtn.setAttribute('target', '_blank');
                 downloadBtn.setAttribute('rel', 'noopener noreferrer');
